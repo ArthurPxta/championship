@@ -1,6 +1,7 @@
 # championship
 Championship manager 
- ---------Ideia de trabalho 2-----------
+ 
+---------Ideia de trabalho 2-----------
 .Cadastro de Campeonato de Jiu-Jitsu * winner *
 
 Menu
