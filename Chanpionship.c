@@ -23,7 +23,7 @@ int contaCompetidores()
       return 1;
    }
 
-   int nCompetidores = 1;
+   int nCompetidores = 0;
    char temp;
 
    while (fscanf(cadastro, "%c", &temp) != EOF)
@@ -34,7 +34,7 @@ int contaCompetidores()
    fclose(cadastro);
    return nCompetidores;
 }
-
+// organizar o arquvivo antes de procurar o competidor
 void achaCompetidor()
 {
    int inscricao;
@@ -49,6 +49,8 @@ int cadastrarCompetidor(int nCompetidores)
 {
    struct competidor competidor;
 
+   // bug com o modo de cadastro a funciona para adicionar mas no primeiro caso falha
+   // o w funciona apenas para o primeiro caso e nao para adicionar
    cadastro = fopen("cadastro.txt", "a");
    // Testa se arquivo foi aberto corretamente
    if (cadastro == NULL)
@@ -70,11 +72,13 @@ int cadastrarCompetidor(int nCompetidores)
 
    printf("Informe o peso do competidor:");
    scanf("%f", &competidor.peso);
-
-   // setbuf(stdin, NULL);
+   
+   setbuf(stdin, NULL);
 
    printf("Informe a idade do competidor: ");
    scanf("%d", &competidor.idade);
+   
+   setbuf(stdin, NULL);
 
    nCompetidores++;
 
@@ -82,9 +86,11 @@ int cadastrarCompetidor(int nCompetidores)
    // Nova função cria o número de inscrição do competidor baseado na quantidade de competidores já inscritos, o número da inscrição será número de competidores + 1.
    competidor.inscricao = nCompetidores;
 
-   fprintf(cadastro, "\n%d %s %s %.2f %d", competidor.inscricao, competidor.nome, competidor.faixa, competidor.peso, competidor.idade);
+   fprintf(cadastro, "%d %s %s %.2f %d \n", competidor.inscricao, competidor.nome, competidor.faixa, competidor.peso, competidor.idade);
 
    fclose(cadastro);
+   // comando para limpar a tela do terminal
+   system("cls");
 
    return nCompetidores;
 }
@@ -93,7 +99,7 @@ int main()
 {
    int opc, nCompetidores = contaCompetidores();
 
-   competidor competidor;
+   //competidor competidor;
 
    while (1)
    {
@@ -115,9 +121,11 @@ int main()
       case 1:
 
          nCompetidores = cadastrarCompetidor(nCompetidores);
-
+         printf("\nO competidor foi cadastrado com sucesso!!\n");
          printf("O numero de competidores eh: %d", contaCompetidores()); // Fazer os acentos funcionarem ??
 
+         _sleep(5000);
+         system("cls");
          break;
 
       case 2:
