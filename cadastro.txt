@@ -1,0 +1,6 @@
+1 Arthur black belt 50.00 28
+2 Vitor branca 65.00 30
+3 Emanuel azul 76.00 22
+4 Bruno Malfacine preta 57.00 40
+5 Wilson amarela 65.00 30
+6 Jailson roxa 88.00 53
