@@ -12,6 +12,37 @@ typedef struct competidor
 
 } competidor;
 
+int *functionVetorCompetidores(competidor *vetorCompetidores, int nCompetidores)
+{
+   cadastro = fopen("cadastro.txt", "r");
+
+   vetorCompetidores = (int *) malloc (nCompetidores * sizeof(competidor));
+
+   for(int i = 0; i < nCompetidores; i++)
+   {
+      fscanf(cadastro, "%d %s %s %.2f %d \n", vetorCompetidores[i].inscricao, vetorCompetidores[i].nome, vetorCompetidores[i].faixa, vetorCompetidores[i].peso, vetorCompetidores[i].idade);
+   }
+
+   return vetorCompetidores;
+}
+
+void removeCompetidores(competidor *vetorCompetidores, int nCompetidores)
+{
+   int inscricao;
+
+   printf("\n Qual o id do competidor que deseja remover? ");
+   scanf("%d", &inscricao);
+
+   for(int i = 0; i < nCompetidores; i++)
+   {
+      if(inscricao == vetorCompetidores[i].inscricao)
+      {
+         
+      }
+   }
+   
+}
+
 int contaCompetidores()
 {
    cadastro = fopen("cadastro.txt", "r");
@@ -45,7 +76,7 @@ void achaCompetidor()
 
 // Alteração no nome da função: nome atualizado para seguir o padrão camelCase, convenção para nome de funções e variáveis
 // int Cadastrar_Competidor(int n_competidores)
-int cadastrarCompetidor(int nCompetidores)
+int cadastraCompetidor(int nCompetidores)
 {
    struct competidor competidor;
 
@@ -99,7 +130,7 @@ int main()
 {
    int opc, nCompetidores = contaCompetidores();
 
-   //competidor competidor;
+   competidor *vetorCompetidores;
 
    while (1)
    {
@@ -120,15 +151,17 @@ int main()
       {
       case 1:
 
-         nCompetidores = cadastrarCompetidor(nCompetidores);
+         nCompetidores = cadastraCompetidor(nCompetidores);
          printf("\nO competidor foi cadastrado com sucesso!!\n");
-         printf("O numero de competidores eh: %d", contaCompetidores()); // Fazer os acentos funcionarem ??
+         printf("O numero de competidores e: %d", contaCompetidores());
 
          _sleep(3000);
          system("cls");
          break;
 
       case 2:
+         removeCompetidores(vetorCompetidores, nCompetidores);
+
 
          break;
 
