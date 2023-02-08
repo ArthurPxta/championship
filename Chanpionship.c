@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
+// declaração do ponteiro FILE
 FILE *cadastro;
 
+// declaração do struct competidor
 typedef struct competidor
 {
    char faixa[15], nome[50];
@@ -12,42 +15,8 @@ typedef struct competidor
 
 } competidor;
 
-<<<<<<< HEAD
-int *functionVetorCompetidores(competidor *vetorCompetidores, int nCompetidores)
-{
-   cadastro = fopen("cadastro.txt", "r");
-
-   vetorCompetidores = (int *) malloc (nCompetidores * sizeof(competidor));
-
-   for(int i = 0; i < nCompetidores; i++)
-   {
-      fscanf(cadastro, "%d %s %s %.2f %d \n", vetorCompetidores[i].inscricao, vetorCompetidores[i].nome, vetorCompetidores[i].faixa, vetorCompetidores[i].peso, vetorCompetidores[i].idade);
-   }
-
-   return vetorCompetidores;
-}
-
-void removeCompetidores(competidor *vetorCompetidores, int nCompetidores)
-{
-   int inscricao;
-
-   printf("\n Qual o id do competidor que deseja remover? ");
-   scanf("%d", &inscricao);
-
-   for(int i = 0; i < nCompetidores; i++)
-   {
-      if(inscricao == vetorCompetidores[i].inscricao)
-      {
-         
-      }
-   }
-   
-}
-
-int contaCompetidores()
-=======
+// função que conta competidores
 int contarCompetidores()
->>>>>>> bc2d946dfe09e1657eace2d09782f596f9d9dd48
 {
    cadastro = fopen("cadastro.txt", "r");
    // Testa se arquivo foi aberto corretamente
@@ -73,11 +42,13 @@ int contarCompetidores()
 // Cadastra um novo competidor, adicionando no arquivo
 int cadastrarCompetidor(int nCompetidores)
 {
+   system("cls");
+   printf("\n---- CADASTRO DE COMPETIRORES ------\n");
+
    struct competidor competidor;
 
-   // bug com o modo de cadastro a funciona para adicionar mas no primeiro caso falha
-   // o w funciona apenas para o primeiro caso e nao para adicionar
    cadastro = fopen("cadastro.txt", "a");
+
    // Testa se arquivo foi aberto corretamente
    if (cadastro == NULL)
    {
@@ -108,8 +79,6 @@ int cadastrarCompetidor(int nCompetidores)
 
    nCompetidores++;
 
-   //  competidor.inscricao = rand()%99999; //Fazer inscrição sequencial baseado no numero de participantes + 1;
-   // Nova função cria o número de inscrição do competidor baseado na quantidade de competidores já inscritos, o número da inscrição será número de competidores + 1.
    competidor.inscricao = nCompetidores;
 
    fprintf(cadastro, "%d %s %s %.2f %d \n", competidor.inscricao, competidor.nome, competidor.faixa, competidor.peso, competidor.idade);
@@ -122,8 +91,55 @@ int cadastrarCompetidor(int nCompetidores)
 }
 
 // Remove o competidor do vetor e do arquivo
-void removerCompetidor()
-{
+void removerCompetidor(competidor *vetorCompetidores, int nCompetidores)
+{  
+   // limpa a tela 
+   system("cls");
+   printf("\n ----- REMOCAO DE COMPETIDORES ------ \n");
+   int inscricao;
+   char confirma;
+
+   // vetor com a quantidade de competidores inscritos
+   vetorCompetidores = (int *) malloc (nCompetidores * sizeof(struct competidor));
+
+   printf("\n Qual o id do competidor que deseja remover? ");
+   scanf("%d", &inscricao);
+   setbuf(stdin,NULL);
+
+   // func para ver se o competidor está no arquivo
+   acharCompetidor(vetorCompetidores, nCompetidores, inscricao);
+
+   for(int i = 0; i < nCompetidores; i++)
+   {
+      
+      if(inscricao == vetorCompetidores[i].inscricao)
+      {
+         printf("\n Deseja remover o competidor %s faixa %s (S/n)", vetorCompetidores[i].nome, vetorCompetidores[i].faixa);
+         scanf(" %c", &confirma);
+         setbuf(stdin,NULL);
+
+         if(toupper(confirma) == 'S')
+         {
+            vetorCompetidores[i].inscricao = 0;
+         }
+      }
+   }
+   // apaga o conteudo do arquivo anterior
+   cadastro = fopen("cadastro.txt", "w+");
+   // escreve a quantidade de competidores restantes
+   for(int i = 0; i < nCompetidores;i++)
+   {
+      if(vetorCompetidores[i].inscricao != 0)
+      {
+         fprintf(cadastro, "%d %s %s %f %d \n", vetorCompetidores[i].inscricao, vetorCompetidores[i].nome, vetorCompetidores[i].faixa, vetorCompetidores[i].peso, vetorCompetidores[i].idade);
+
+      }
+   }
+   // fecha o arquivo
+   fclose(cadastro);
+   //limpa a memoria do vetor
+   free(vetorCompetidores);
+   system("cls");
 }
 
 // Altera algum dado do competidor do vetor e do arquivo
@@ -131,13 +147,22 @@ void alterarCompetidor()
 {
 }
 
-// organizar o arquvivo antes de procurar o competidor
-void acharCompetidor()
+// verifica se o competidor esta no arquivo
+void acharCompetidor(competidor *vetorCompetidores, int nCompetidores, int inscricao)
 {
-   int inscricao;
-   printf("\nDigite o id do competidor que deseja: ");
-   scanf("%d", &inscricao);
-   printf("\nCompetidor de inscricao: %d", inscricao); // Fazer acentos funcionarem ??
+
+   cadastro = fopen("cadastro.txt", "r");
+
+   for(int i = 0; i < nCompetidores; i++)
+   {
+      fscanf(cadastro, "%d %s %s %f %d", &vetorCompetidores[i].inscricao, vetorCompetidores[i].nome, vetorCompetidores[i].faixa, &vetorCompetidores[i].peso, &vetorCompetidores[i].idade);
+      if(inscricao == vetorCompetidores[i].inscricao)
+      {
+         printf("\n O competidor %s esta no arquvivo \n", vetorCompetidores[i].nome);
+      }
+   }
+
+   fclose(cadastro);
 }
 
 // Começa o campeonato
@@ -168,6 +193,8 @@ int main()
 {
    int opcao, nCompetidores = contarCompetidores();
 
+   competidor *vetorCompetidores;
+
    while (1)
    {
 
@@ -177,7 +204,8 @@ int main()
       {
       case 1:
 
-         nCompetidores = cadastraCompetidor(nCompetidores);
+         nCompetidores = cadastrarCompetidor(nCompetidores);
+
          printf("\nO competidor foi cadastrado com sucesso!!\n");
          printf("Novo numero de competidores: %d", contarCompetidores());
 
@@ -187,7 +215,13 @@ int main()
 
       case 2:
          // Criar função
-         removerCompetidor();
+         removerCompetidor(vetorCompetidores, nCompetidores);
+
+         printf("\n O competidor foi removido com sucesso \n");
+         printf("Novo numero de competidores: %d", contarCompetidores());
+
+         _sleep(3000);
+         system("cls");
          break;
 
       case 3:
