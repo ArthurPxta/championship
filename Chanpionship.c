@@ -124,7 +124,7 @@ int main()
          printf("\nO competidor foi cadastrado com sucesso!!\n");
          printf("O numero de competidores eh: %d", contaCompetidores()); // Fazer os acentos funcionarem ??
 
-         _sleep(5000);
+         _sleep(3000);
          system("cls");
          break;
 
