@@ -12,7 +12,7 @@ typedef struct competidor
 
 } competidor;
 
-int contaCompetidores()
+int contarCompetidores()
 {
    cadastro = fopen("cadastro.txt", "r");
    // Testa se arquivo foi aberto corretamente
@@ -34,17 +34,8 @@ int contaCompetidores()
    fclose(cadastro);
    return nCompetidores;
 }
-// organizar o arquvivo antes de procurar o competidor
-void achaCompetidor()
-{
-   int inscricao;
-   printf("\nDigite o id do competidor que deseja: ");
-   scanf("%d", &inscricao);
-   printf("\nCompetidor de inscricao: %d", inscricao); // Fazer acentos funcionarem ??
-}
 
-// Alteração no nome da função: nome atualizado para seguir o padrão camelCase, convenção para nome de funções e variáveis
-// int Cadastrar_Competidor(int n_competidores)
+// Cadastra um novo competidor, adicionando no arquivo
 int cadastrarCompetidor(int nCompetidores)
 {
    struct competidor competidor;
@@ -72,12 +63,12 @@ int cadastrarCompetidor(int nCompetidores)
 
    printf("Informe o peso do competidor:");
    scanf("%f", &competidor.peso);
-   
+
    setbuf(stdin, NULL);
 
    printf("Informe a idade do competidor: ");
    scanf("%d", &competidor.idade);
-   
+
    setbuf(stdin, NULL);
 
    nCompetidores++;
@@ -95,60 +86,94 @@ int cadastrarCompetidor(int nCompetidores)
    return nCompetidores;
 }
 
+// Remove o competidor do vetor e do arquivo
+void removerCompetidor()
+{
+}
+
+// Altera algum dado do competidor do vetor e do arquivo
+void alterarCompetidor()
+{
+}
+
+// organizar o arquvivo antes de procurar o competidor
+void acharCompetidor()
+{
+   int inscricao;
+   printf("\nDigite o id do competidor que deseja: ");
+   scanf("%d", &inscricao);
+   printf("\nCompetidor de inscricao: %d", inscricao); // Fazer acentos funcionarem ??
+}
+
+// Começa o campeonato
+void comecarCampeonato()
+{
+}
+
+// Escreve o menu
+int menu()
+{
+   int opcao;
+   printf("\n\n------- MENU -------- \n");
+   printf("1) CADASTRAR COMPETIDOR \n");
+   printf("2) REMOVER COMPETIDOR \n");
+   printf("3) ALTERAR DADOS DO COMPETIDOR \n");
+   printf("4) PESQUISAR COMPETIDORES\n");
+   printf("5) COMECAR CAMPEONATO \n");
+   printf("6) SAIR \n");
+
+   printf("\n Digite a Opcao: ");
+   scanf("%d", &opcao);
+
+   setbuf(stdin, NULL);
+   return opcao;
+}
+
 int main()
 {
-   int opc, nCompetidores = contaCompetidores();
-
-   //competidor competidor;
+   int opcao, nCompetidores = contarCompetidores();
 
    while (1)
    {
-      printf("\n\n------- MENU -------- \n");
-      printf("1) CADASTRAR COMPETIDOR \n");
-      printf("2) REMOVER COMPETIDOR \n");
-      printf("3) ALTERAR DADOS DO COMPETIDOR \n");
-      printf("4) PESQUISAR COMPETIDORES\n");
-      printf("5) COMECAR CAMPEONATO \n");
-      printf("6) SAIR \n");
 
-      printf("\n Digite a Opcao: ");
-      scanf("%d", &opc);
+      opcao = menu();
 
-      setbuf(stdin, NULL);
-
-      switch (opc)
+      switch (opcao)
       {
       case 1:
 
          nCompetidores = cadastrarCompetidor(nCompetidores);
          printf("\nO competidor foi cadastrado com sucesso!!\n");
-         printf("O numero de competidores eh: %d", contaCompetidores()); // Fazer os acentos funcionarem ??
+         printf("Novo numero de competidores: %d", contarCompetidores());
 
          _sleep(3000);
          system("cls");
          break;
 
       case 2:
-
+         // Criar função
+         removerCompetidor();
          break;
 
       case 3:
-
+         // Criar função
+         alterarCompetidor();
          break;
 
       case 4:
          //   Por enquanto, mostra apenas o número de competidores
          printf("Numero de competidores: %d", nCompetidores);
-         achaCompetidor();
 
          break;
 
       case 5:
+
+         comecarCampeonato();
          break;
 
       case 6:
 
-         printf("Programa encerrado.");
+         printf("\nPrograma encerrado.\n");
          return 0;
          break;
 
