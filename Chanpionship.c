@@ -121,6 +121,7 @@ int cadastrarCompetidor(int nCompetidores)
    return nCompetidores;
 }
 
+// PRECISA DE ALTERAÇÃO PARA FUNCIONAR
 // Remove o competidor do vetor e do arquivo
 void removerCompetidor(competidor *vetorCompetidores, int nCompetidores)
 {
@@ -175,7 +176,7 @@ void removerCompetidor(competidor *vetorCompetidores, int nCompetidores)
    free(vetorCompetidores);
 
    system("cls");
-   
+
    printf("\n O competidor foi removido com sucesso \n");
    printf("Novo numero de competidores: %d", contarCompetidores());
    _sleep(3000);
