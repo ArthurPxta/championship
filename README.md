@@ -32,3 +32,5 @@ busca e ordenação --- chaves
 Categoria absoluto -- vetor
    por faixa
 
+
+UM BOM GUERREIRO TEM MUITAS CICATRIZES
