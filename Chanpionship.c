@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// declaração do ponteiro FILE
+// declaração do ponteiro tipo FILE
 FILE *cadastro;
 
 // declaração do struct competidor
@@ -12,8 +12,9 @@ typedef struct competidor
    char faixa[15], nome[50];
    float peso;
    int idade, inscricao;
-
 } competidor;
+
+// declaração global do vetor de competidores
 
 competidor *vetorCompetidores;
 
@@ -24,9 +25,15 @@ void carregarCompetidores(int nCompetidores)
    vetorCompetidores = (competidor *)malloc(nCompetidores * sizeof(competidor));
    for (int i = 0; i < nCompetidores; i++)
    {
-      fscanf(cadastro, "%d %s %s %f %d", &vetorCompetidores[i + 1].inscricao,
-             vetorCompetidores[i + 1].nome, vetorCompetidores[i + 1].faixa,
-             &vetorCompetidores[i + 1].peso, &vetorCompetidores[i + 1].idade);
+      fscanf(cadastro, "%d %s %s %f %d",
+            &vetorCompetidores[i].inscricao,
+            vetorCompetidores[i].nome,
+            vetorCompetidores[i].faixa,
+            &vetorCompetidores[i].peso,
+            &vetorCompetidores[i].idade);
+      // printf("%d %s %s %f %d\n", vetorCompetidores[i].inscricao,
+      //        vetorCompetidores[i].nome, vetorCompetidores[i].faixa,
+      //        vetorCompetidores[i].peso, vetorCompetidores[i].idade);
    }
    fclose(cadastro);
 }
@@ -39,7 +46,7 @@ void salvarCompetidores(int nCompetidores)
    {
       printf("Error opening file.\n");
       printf("Function: getNumberOfStudents\n");
-      return 1;
+      // return 1;
    }
 
    for (int i = 0; i < nCompetidores; i++)
@@ -80,7 +87,7 @@ int contarCompetidores()
 int cadastrarCompetidor(int nCompetidores)
 {
    system("cls");
-   printf("\n---- CADASTRO DE COMPETIRORES ------\n");
+   printf("---- CADASTRO DE COMPETIRORES ------\n");
 
    nCompetidores++;
 
@@ -115,7 +122,7 @@ int cadastrarCompetidor(int nCompetidores)
 
    printf("\nO competidor foi cadastrado com sucesso!!\n");
    printf("Novo numero de competidores: %d", nCompetidores);
-   _sleep(3000);
+   // _sleep(3000);
 
    // Retorna o novo número de competidores
    return nCompetidores;
@@ -170,6 +177,7 @@ void removerCompetidor(competidor *vetorCompetidores, int nCompetidores)
                  vetorCompetidores[i].peso, vetorCompetidores[i].idade);
       }
    }
+
    // fecha o arquivo
    fclose(cadastro);
    // limpa a memoria do vetor
@@ -179,28 +187,43 @@ void removerCompetidor(competidor *vetorCompetidores, int nCompetidores)
 
    printf("\n O competidor foi removido com sucesso \n");
    printf("Novo numero de competidores: %d", contarCompetidores());
-   _sleep(3000);
+   // _sleep(3000);
 }
 
 // Altera algum dado do competidor do vetor e do arquivo
 void alterarCompetidor() {}
 
 // verifica se o competidor esta no arquivo
-void acharCompetidor()
+void acharCompetidor(int nCompetidores)
 {
    int id;
+   char temp;
 
    system("cls");
-   printf("Competidores registrados: %d\n", contarCompetidores());
-   printf("Digite a inscricao do competidor: ");
-   scanf(" %d", &id);
+   printf("Competidores registrados: %d\n", nCompetidores);
+
+   do
+   {
+      printf("Digite a inscricao do competidor: ");
+      scanf(" %d", &id);
+
+      if (id < 1)
+      {
+         printf("Menor número de inscricao: 0");
+         printf("Escreva uma inscricao valida!");
+      }
+      else if (id > nCompetidores)
+      {
+         printf("Maior número de inscricao: %d", nCompetidores);
+         printf("Escreva uma inscricao valida!");
+      }
+   } while (id < 1 || id > nCompetidores);
 
    printf("\nNome: %s\nInscricao: %d\nFaixa: %s\nPeso: %g\nIdade: %d", vetorCompetidores[id].nome, vetorCompetidores[id].inscricao, vetorCompetidores[id].faixa, vetorCompetidores[id].peso, vetorCompetidores[id].idade);
 
-   printf("\nAperte qualquer tecla para continuar.\n");
-   // Aparentemente, getch funciona apenas no windows
-   _getch();
-   // solução com scanf("%c", &temp); não funcionou, pois era necessário apertar um tecla + Enter
+   printf("\nAperte Enter para continuar.\n");
+   scanf("%c", &temp);
+   scanf("%c", &temp);
 }
 
 // Começa o campeonato
@@ -235,24 +258,21 @@ int main()
 
    while (1)
    {
-
-      opcao = menu();
-
-      switch (opcao)
+      switch (opcao = menu())
       {
       case 1:
-
          nCompetidores = cadastrarCompetidor(nCompetidores);
          break;
-
       case 2:
          removerCompetidor(vetorCompetidores, nCompetidores);
          break;
       case 3:
          // alterarCompetidor();
+         carregarCompetidores(nCompetidores);
+         // sleep(1000);
          break;
       case 4:
-         acharCompetidor();
+         acharCompetidor(nCompetidores);
          break;
       case 5:
          comecarCampeonato();
@@ -263,7 +283,6 @@ int main()
          printf("\nPrograma encerrado.\n");
          return 0;
          break;
-
       default:
          printf(" \n Opcao invalida! \n");
          break;

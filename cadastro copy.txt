@@ -1,7 +1,10 @@
-1 Arthur black 50.00 28
-2 Vitor branca 65.00 30
-3 Emanuel azul 76.00 22
-4 Bruno preta 57.00 40
-5 Wilson amarela 65.00 30
-6 Jailson roxa 88.00 53
-7 Alberto Azul 76.00 45 
+1 Arthur black 50 28
+2 Vitor branca 65 30
+3 Emanuel azul 76 22
+4 Bruno preta 57 40
+5 Wilson amarela 65 30
+6 Jailson roxa 88 53
+7 Kelvin azul 55 32
+8 Mateus cinza 67 43
+9 Pedro cinza 76 23
+10 Antonio azul 56 17
