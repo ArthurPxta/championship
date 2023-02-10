@@ -85,78 +85,6 @@ int contarCompetidores()
    return nCompetidores;
 }
 
-int oldcadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
-{
-   system("cls");
-   printf("---- CADASTRO DE COMPETIRORES ------\n");
-
-   printf("Antigo número de competidores: %d\n", nCompetidores);
-   nCompetidores++;
-   printf("Novo número de competidores: %d\n", nCompetidores);
-
-   printf("%zu", sizeof(int));
-
-   // if ((vetorCompetidores = realloc(vetorCompetidores, nCompetidores * sizeof(Competidor))) == NULL)
-   // {
-   //    exit(1);
-   // }
-
-   Competidor *tempCompetidores;
-   tempCompetidores = malloc(nCompetidores * sizeof(Competidor));
-
-   for (int i = 0; i < nCompetidores; i++)
-   {
-      tempCompetidores[i].inscricao = vetorCompetidores[i].inscricao;
-      *tempCompetidores[i].nome = vetorCompetidores[i].nome;
-      *tempCompetidores[i].faixa = vetorCompetidores[i].faixa;
-      tempCompetidores[i].peso = vetorCompetidores[i].peso;
-      tempCompetidores[i].idade = vetorCompetidores[i].idade;
-   }
-
-   free(vetorCompetidores);
-
-   // Começa a cadastrar o novo competidor
-
-   tempCompetidores[nCompetidores].inscricao = nCompetidores;
-
-   printf("Informe o nome do competidor:");
-   scanf("%15[^\n]", tempCompetidores[nCompetidores].nome);
-
-   printf("%s\n", tempCompetidores[nCompetidores].nome);
-
-   setbuf(stdin, NULL);
-
-   printf("Informe a faixa do competidor:");
-   scanf("%50[^\n]", tempCompetidores[nCompetidores].faixa);
-
-   printf("%s\n", tempCompetidores[nCompetidores].faixa);
-
-   setbuf(stdin, NULL);
-
-   printf("Informe o peso do competidor:");
-   scanf("%f", tempCompetidores[nCompetidores].peso);
-
-   printf("%d\n", tempCompetidores[nCompetidores].peso);
-
-   setbuf(stdin, NULL);
-
-   printf("Informe a idade do competidor: ");
-   scanf("%d", tempCompetidores[nCompetidores].idade);
-
-   printf("%d\n", tempCompetidores[nCompetidores].idade);
-
-   setbuf(stdin, NULL);
-
-   salvarCompetidores(nCompetidores, tempCompetidores);
-
-   printf("\nO competidor foi cadastrado com sucesso!!\n");
-   printf("Novo numero de competidores: %d", nCompetidores);
-   _sleep(3000);
-
-   // Retorna o novo número de competidores
-   return nCompetidores;
-}
-
 int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 {
    system("cls");
@@ -335,16 +263,13 @@ int main()
          break;
       case 4:
          acharCompetidor(nCompetidores, vetorCompetidores);
-         char temp;
 
          printf("\nAperte Enter para continuar.\n");
-         scanf("%c", &temp);
-         scanf("%c", &temp);
+         getchar();
+         getchar();
          break;
       case 5:
          comecarCampeonato();
-         printf("\nPrograma encerrado.\n");
-         return 0;
          break;
       case 6:
          printf("\nPrograma encerrado.\n");
