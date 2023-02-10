@@ -15,7 +15,7 @@ void removerCompetidor(int nCompetidores,Competidor *vetorCompetidores)
 {
    system("cls");
    
-   int id, i;
+   int id;
    char confirma;
    
    printf("-------Remover Competidor-------- \n");
@@ -24,7 +24,7 @@ void removerCompetidor(int nCompetidores,Competidor *vetorCompetidores)
 
    carregarCompetidores(nCompetidores, vetorCompetidores);
 
-   for(i = 0; i < nCompetidores; i++)
+   for(int i = 0; i < nCompetidores; i++)
    {
       if(id == vetorCompetidores[i].inscricao)
       {
