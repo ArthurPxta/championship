@@ -11,6 +11,40 @@ typedef struct competidor
    int idade, inscricao;
 } Competidor;
 
+void removerCompetidor(int nCompetidores,Competidor *vetorCompetidores)
+{
+   system("cls");
+   
+   int id, i;
+   char confirma;
+   
+   printf("-------Remover Competidor-------- \n");
+   printf("\n Digite o id do competidor: ");
+   scanf("%d", &id);
+
+   carregarCompetidores(nCompetidores, vetorCompetidores);
+
+   for(i = 0; i < nCompetidores; i++)
+   {
+      if(id == vetorCompetidores[i].inscricao)
+      {
+         printf("Competidor  %s encontrado deseja remove-lo? (S/n)", vetorCompetidores[i].nome);
+         scanf(" %c", &confirma);
+
+            if(toupper(confirma) == 'S')
+            {
+               vetorCompetidores[i].inscricao = 0;
+
+            }
+      }
+   }
+
+   salvarCompetidores(nCompetidores, vetorCompetidores);
+
+   system("cls");
+   printf("\ncompetidor removido com sucesso!\n");
+
+}
 // carrega os competidores do arquivo no vetor
 void carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
 {
@@ -41,7 +75,7 @@ void salvarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
 {
    // declaração do ponteiro tipo FILE
    FILE *cadastro;
-   cadastro = fopen("cadastro.txt", "w");
+   cadastro = fopen("cadastro.txt", "w+");
 
    if (cadastro == NULL)
    {
@@ -52,14 +86,19 @@ void salvarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
 
    for (int i = 0; i < nCompetidores; i++)
    {
+      if(vetorCompetidores[i].inscricao != 0)
+      {
       fprintf(cadastro, "%d %s %s %g %d\n",
               vetorCompetidores[i].inscricao,
               vetorCompetidores[i].nome,
               vetorCompetidores[i].faixa,
               vetorCompetidores[i].peso,
               vetorCompetidores[i].idade);
+      }
+
    }
    fclose(cadastro);
+
 }
 // função que conta competidores
 int contarCompetidores()
@@ -138,38 +177,53 @@ void comecarCampeonato() {}
 // verifica se o competidor esta no arquivo
 void acharCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 {
-   int id;
+   int id, valid = 0;
 
    system("cls");
    printf("Competidores registrados: %d\n", nCompetidores);
 
-   do
-   {
+   // do
+   // {
       printf("Digite a inscricao do competidor: ");
       scanf(" %d", &id);
+      
+      carregarCompetidores(nCompetidores, vetorCompetidores);
 
-      if (id < 1)
+      for(int i = 0; i < nCompetidores; i++)
       {
-         printf("Menor número de inscricao: 0\n");
-         printf("Escreva uma inscricao valida!\n");
-      }
-      else if (id > nCompetidores)
-      {
-         printf("Maior número de inscricao: %d\n", nCompetidores);
-         printf("Escreva uma inscricao valida!\n");
-      }
-   } while (id < 1 || id > nCompetidores);
+         if(id == vetorCompetidores[i].inscricao)
+         {
+            valid = 1;
+            
+            printf("\nNome: %s\nInscricao: %d\nFaixa: %s\nPeso: %g\nIdade: %d", vetorCompetidores[i].nome, vetorCompetidores[i].inscricao, vetorCompetidores[i].faixa, vetorCompetidores[i].peso, vetorCompetidores[i].idade);
 
-   id--;
+         }
+      }
+   //    if (id < 1)
+   //    {
+   //       printf("Menor número de inscricao: 0\n");
+   //       printf("Escreva uma inscricao valida!\n");
+   //    }
+   //    else if (id > nCompetidores)
+   //    {
+   //       printf("Maior número de inscricao: %d\n", nCompetidores);
+   //       printf("Escreva uma inscricao valida!\n");
+   //    }
+   // } while (id < 1 || id > nCompetidores);
 
-   printf("\nNome: %s\nInscricao: %d\nFaixa: %s\nPeso: %g\nIdade: %d", vetorCompetidores[id].nome, vetorCompetidores[id].inscricao, vetorCompetidores[id].faixa, vetorCompetidores[id].peso, vetorCompetidores[id].idade);
+   if(valid == 0)
+   {
+      printf("\n O competidor com o id %d nao existe!! \n", id);
+
+   }
+
 }
 
 // Altera informações do competidor
 void alterarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 {
-   int competidor, opcao, novoPeso, novaIdade;
-   char novoNome[50], novaFaixa[15];
+   int competidor, opcao; //, novoPeso, novaIdade;
+   // char novoNome[50], novaFaixa[15];
    printf("Digite o id do competidor que deseja alterar: ");
    scanf("%d", &competidor);
    setbuf(stdin, NULL);
@@ -187,12 +241,12 @@ void alterarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    {
    case 1:
       printf("Informe o nome do competidor:");
-      scanf("%30[^\n]", vetorCompetidores[competidor - 1].nome);
+      scanf("%50[^\n]", vetorCompetidores[competidor - 1].nome);
       setbuf(stdin, NULL);
       break;
    case 2:
       printf("Informe a faixa do competidor:");
-      scanf("%30[^\n]", vetorCompetidores[competidor - 1].faixa);
+      scanf("%15[^\n]", vetorCompetidores[competidor - 1].faixa);
       setbuf(stdin, NULL);
       break;
    case 3:
@@ -255,10 +309,10 @@ int main()
          nCompetidores = cadastrarCompetidor(nCompetidores, vetorCompetidores);
          break;
       case 2:
-         // removerCompetidor(nCompetidores, vetorCompetidores);
+         removerCompetidor(nCompetidores, vetorCompetidores);
          break;
       case 3:
-         alterarCompetidor(nCompetidores, vetorCompetidores);
+         alterarCompetidor(contarCompetidores, vetorCompetidores);
          sleep(3);
          break;
       case 4:
