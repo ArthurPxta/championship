@@ -1,6 +1,6 @@
 1 Arthur black 50 28
 2 Vitor branca 65 30
-3 Emanuel azul 76 22
+3 Emanuel Roxa 76 22
 4 Bruno preta 57 40
 5 Wilson amarela 65 30
 6 Jailson roxa 88 53
@@ -8,3 +8,6 @@
 8 Mateus cinza 67 43
 9 Pedro cinza 76 23
 10 Antonio azul 56 17
+11 Michael Amarela 55 60
+12 Diego Azul 88 34
+13 Jonathan azul 55 24 
