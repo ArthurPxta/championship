@@ -335,6 +335,8 @@ int carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
              &vetorCompetidores[i].idade);
    }
    fclose(cadastro);
+   ordenarCompetidores(nCompetidores, vetorCompetidores);
+   salvarCompetidores(nCompetidores, vetorCompetidores);
 
    return maiorInscricao;
 }
@@ -366,6 +368,43 @@ void salvarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
       }
    }
    fclose(cadastro);
+}
+
+// Alterna a ordem dos competidores, CHAMADA APENAS PELA ordenarCompetidores
+void alternaCompetidor(int comp1, int comp2, Competidor *vetorCompetidores)
+{
+   Competidor temp;
+   temp.inscricao = vetorCompetidores[comp1].inscricao;
+   temp.idade = vetorCompetidores[comp1].idade;
+   temp.peso = vetorCompetidores[comp1].peso;
+   strcpy(temp.nome, vetorCompetidores[comp1].nome);
+   strcpy(temp.faixa, vetorCompetidores[comp1].faixa);
+
+   vetorCompetidores[comp1].inscricao = vetorCompetidores[comp2].inscricao;
+   vetorCompetidores[comp1].idade = vetorCompetidores[comp2].idade;
+   vetorCompetidores[comp1].peso = vetorCompetidores[comp2].peso;
+   strcpy(vetorCompetidores[comp1].nome, vetorCompetidores[comp2].nome);
+   strcpy(vetorCompetidores[comp1].faixa, vetorCompetidores[comp2].faixa);
+
+   vetorCompetidores[comp2].inscricao = temp.inscricao;
+   vetorCompetidores[comp2].idade = temp.idade;
+   vetorCompetidores[comp2].peso = temp.peso;
+   strcpy(vetorCompetidores[comp2].nome, temp.nome);
+   strcpy(vetorCompetidores[comp2].faixa, temp.faixa);
+}
+
+// ordena os competidores de forma sequencial, considerando o número de inscrição
+void ordenarCompetidores(int n, Competidor *vetorCompetidores)
+{
+   if (n < 1)
+      return;
+
+   for (int i = 0; i < n; i++)
+   {
+      if (vetorCompetidores[i].inscricao > vetorCompetidores[i + 1].inscricao)
+         alternaCompetidor(i, i + 1, vetorCompetidores);
+   }
+   ordenarCompetidores(n - 1, vetorCompetidores);
 }
 
 // função que conta competidores
@@ -420,7 +459,6 @@ int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    int lacuna = temLacuna(nCompetidores, vetorCompetidores);
    system("cls");
    printf("\n---- CADASTRO DE COMPETIRORES ------\n");
-   printf("Lacuna: %d", lacuna);
 
    struct competidor competidor;
 
