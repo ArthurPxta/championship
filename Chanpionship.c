@@ -279,6 +279,7 @@ void separaFaixa(int nCompetidores, Competidor *vertorCompetidores)
    }
 }
 
+// Remove competidor do vetor, e salva vetor atualizado no arquivo
 void removerCompetidor(int nCompetidores,Competidor *vetorCompetidores)
 {
    system("cls");
@@ -589,6 +590,7 @@ int main()
          break;
       case 2:
          removerCompetidor(nCompetidores, vetorCompetidores);
+         nCompetidores = contarCompetidores();
          break;
       case 3:
          alterarCompetidor(contarCompetidores, vetorCompetidores);
