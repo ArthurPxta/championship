@@ -12,264 +12,6 @@ typedef struct competidor
    int idade, inscricao;
 } Competidor;
 
-// separa os competidores por peso
-void separaPeso(int nCompetidores, Competidor *vertorCompetidores)
-{
-   FILE *peso;
-
-   carregarCompetidores(nCompetidores, vertorCompetidores);
-
-   for (int i = 0; i < nCompetidores; i++)
-   {
-      if (vertorCompetidores[i].peso < 57.5)
-      {
-         peso = fopen("galo.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 57.5 && vertorCompetidores[i].peso < 64)
-      {
-         peso = fopen("pluma.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 64 && vertorCompetidores[i].peso < 70)
-      {
-         peso = fopen("pena.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 70 && vertorCompetidores[i].peso < 76)
-      {
-         peso = fopen("leve.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 76 && vertorCompetidores[i].peso < 82.3)
-      {
-         peso = fopen("medio.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 82.3 && vertorCompetidores[i].peso < 88.3)
-      {
-         peso = fopen("meioPesado.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 88.3 && vertorCompetidores[i].peso < 94.3)
-      {
-         peso = fopen("pesado.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 94.3 && vertorCompetidores[i].peso < 100.5)
-      {
-         peso = fopen("superPesado.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-      else if (vertorCompetidores[i].peso >= 100.5)
-      {
-         peso = fopen("pesadissimo.txt", "a");
-
-         fprintf(peso, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(peso);
-      }
-   }
-}
-
-// separa os competidores por faixa
-void separaFaixa(int nCompetidores, Competidor *vertorCompetidores)
-{
-   FILE *faixa;
-
-   carregarCompetidores(nCompetidores, vertorCompetidores);
-
-   for (int i = 0; i < nCompetidores; i++)
-   {
-      if (strcmp(tolower(vertorCompetidores[i].faixa), "branca") == 0)
-      {
-         faixa = fopen("branca.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "cinza") == 0)
-      {
-         faixa = fopen("cinza.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "amarela") == 0)
-      {
-         faixa = fopen("amarela.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "laranja") == 0)
-      {
-         faixa = fopen("laranja.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "verde") == 0)
-      {
-         faixa = fopen("verde.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "azul") == 0)
-      {
-         faixa = fopen("azul.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "roxa") == 0)
-      {
-         faixa = fopen("roxa.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "marrom") == 0)
-      {
-         faixa = fopen("marrom.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-      else if (strcmp(tolower(vertorCompetidores[i].faixa), "preta") == 0)
-      {
-         faixa = fopen("preta.txt", "a");
-
-         fprintf(faixa, "%d %s %s %g %d\n",
-                 vertorCompetidores[i].inscricao,
-                 vertorCompetidores[i].nome,
-                 vertorCompetidores[i].faixa,
-                 vertorCompetidores[i].peso,
-                 vertorCompetidores[i].idade);
-
-         fclose(faixa);
-      }
-   }
-}
-
 // Remove competidor do vetor, e salva vetor atualizado no arquivo
 void removerCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 {
@@ -622,12 +364,79 @@ int menu()
    return opcao;
 }
 
-// Altera algum dado do competidor do vetor e do arquivo
-void comecarCampeonato()
+int separaCompetidores(int nCompetidores, Competidor *vetorCompetidores, int *competidores, int quantidadeCompetidores, char faixa, char peso)
 {
+   for (int i = 0; i < nCompetidores; i++)
+   {
+      if (tolower(vetorCompetidores[i].faixa[0]) == tolower(faixa))
+      {
+         if (tolower(peso) == 'g')
+         {
+            if (vetorCompetidores[i].peso < 60)
+            {
+               quantidadeCompetidores++;
+               competidores = (int *)realloc(competidores, quantidadeCompetidores * sizeof(int));
+               competidores[quantidadeCompetidores - 1] = vetorCompetidores[i].inscricao;
+            }
+         }
+         else if (tolower(peso) == 'm')
+         {
+            if (vetorCompetidores[i].peso >= 60 && vetorCompetidores[i].peso < 75)
+            {
+               quantidadeCompetidores++;
+               competidores = (int *)realloc(competidores, quantidadeCompetidores * sizeof(int));
+               competidores[quantidadeCompetidores - 1] = vetorCompetidores[i].inscricao;
+            }
+         }
+         else if (tolower(peso) == 'p')
+         {
+            if (vetorCompetidores[i].peso >= 75)
+            {
+               quantidadeCompetidores++;
+               competidores = (int *)realloc(competidores, quantidadeCompetidores * sizeof(int));
+               competidores[quantidadeCompetidores - 1] = vetorCompetidores[i].inscricao;
+            }
+         }
+      }
+   }
+   return quantidadeCompetidores;
+}
+
+void luta()
+{
+}
+
+// Altera algum dado do competidor do vetor e do arquivo
+void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
+{
+   int *competidores, quantidadeCompetidores = 0;
+   competidores = (int *)malloc(quantidadeCompetidores * sizeof(int));
+
+   char faixa[30], peso[30];
+
+   system("cls");
+   printf("Escolha a categoria:\n");
+   printf("Faixas disponiveis para a luta:\n-Branca\n-Roxa\n-Marrom\n-Preta\n");
+   printf("Digite a faixa: ");
+   scanf("%s", &faixa);
+
+   system("cls");
+   printf("Pesos disponiveis para a luta:\n-Galo\n-Medio\n-Pesado\n");
+   printf("Escolha a categoria:\n");
+   printf("Digite o peso: ");
+   scanf("%s", &peso);
+
+   quantidadeCompetidores = separaCompetidores(nCompetidores, vetorCompetidores, competidores, quantidadeCompetidores, faixa[0], peso[0]);
+
+   system("cls");
    printf("\n------ O CAMPEONATO COMECOU------- \n");
 
-   // organizando o por faixa
+   printf("Quantidade de competidores: %d\n", quantidadeCompetidores);
+   for (int i = 0; i < quantidadeCompetidores; i++)
+   {
+      printf("Competidor %d: %s\n", i + 1, vetorCompetidores[competidores[i]-1].nome);
+      printf("Competidor %d: %d\n", i + 1, competidores[i]);
+   }
 }
 
 int main()
@@ -664,7 +473,11 @@ int main()
          getchar();
          break;
       case 5:
-         comecarCampeonato();
+         comecarCampeonato(nCompetidores, vetorCompetidores);
+
+         printf("\nAperte Enter para continuar.\n");
+         getchar();
+         getchar();
          break;
       case 6:
          printf("\nPrograma encerrado.\n");
