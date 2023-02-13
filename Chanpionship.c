@@ -402,55 +402,6 @@ int separaCompetidores(int nCompetidores, Competidor *vetorCompetidores, int *co
    return quantidadeCompetidores;
 }
 
-// Falta testar para checar o funcionamento
-int chaveamento(int quantidadeCompetidores, int competidores[])
-{
-   if (quantidadeCompetidores >= 2)
-   {
-      // int vencedores;
-      int nVencedores = quantidadeCompetidores / 2, indiceVencedores = 0;
-      int vencedores[nVencedores];
-
-      for (int i = 0; i < quantidadeCompetidores / 2; i += 2)
-      {
-         if (luta())
-         {
-            printf("Luta: 1\n");
-            vencedores[indiceVencedores] = competidores[i];
-            indiceVencedores++;
-         }
-         else
-         {
-            printf("Luta: 0\n");
-            vencedores[indiceVencedores] = competidores[i + 1];
-            indiceVencedores++;
-         }
-      }
-
-      if (quantidadeCompetidores % 2 == 1)
-      {
-         vencedores[indiceVencedores] = competidores[quantidadeCompetidores - 1];
-      }
-      // if (quantidadeCompetidores >= 2)
-      // {
-      //    return chaveamento(nVencedores, vencedores);
-      // }
-      // else
-      // {
-      //    return vencedores[0];
-      // }
-         return chaveamento(nVencedores, vencedores);
-   }
-   else if (quantidadeCompetidores == 1)
-   {
-      return competidores[0];
-   }
-   else
-   {
-      return 0;
-   }
-}
-
 // testar a veracidade da aleatoriedade
 int luta()
 {
@@ -470,12 +421,66 @@ int luta()
 
    // testar a veracidade da aleatoriedade
 
-   printf("A: %d, B: %d.\n", a, b);
+   // printf("A: %d, B: %d.\n", a, b);
 
    if (a > b)
       return 1;
    else
       return 0;
+}
+
+// Falta testar para checar o funcionamento
+int chaveamento(int quantidadeCompetidores, int competidores[], Competidor *vetorCompetidores)
+{
+   if (quantidadeCompetidores >= 2)
+   {
+      printf("\nNova Rodada de lutas!\n");
+
+      int nVencedores, vencedores[quantidadeCompetidores];
+
+      if (quantidadeCompetidores % 2 == 1)
+      {
+         nVencedores = (quantidadeCompetidores / 2) + 1;
+         vencedores[nVencedores - 1] = competidores[quantidadeCompetidores - 1];
+      }
+      else
+      {
+         nVencedores = (quantidadeCompetidores) / 2;
+      }
+
+      int indicecompetidores = 0;
+      int indiceVencedores = 0;
+      int indiceLutas = 0;
+
+      for (int i = 0; i < quantidadeCompetidores / 2; i++, indiceLutas++,
+               indiceVencedores++, indicecompetidores += 2)
+      {
+         if (luta())
+         {
+            printf("Luta: %d\n", indiceLutas + 1);
+            printf("%s vs %s\n", vetorCompetidores[competidores[indicecompetidores] - 1].nome, vetorCompetidores[competidores[indicecompetidores + 1] - 1].nome);
+            printf("Vencedor: %s\n", vetorCompetidores[competidores[indicecompetidores] - 1].nome);
+            vencedores[indiceVencedores] = competidores[indicecompetidores];
+         }
+         else
+         {
+            printf("Luta: %d\n", indiceLutas + 1);
+            printf("%s vs %s\n", vetorCompetidores[competidores[indicecompetidores] - 1].nome, vetorCompetidores[competidores[indicecompetidores + 1] - 1].nome);
+            printf("Vencedor: %s\n", vetorCompetidores[competidores[indicecompetidores + 1] - 1].nome);
+            vencedores[indiceVencedores] = competidores[indicecompetidores + 1];
+         }
+      }
+
+      return chaveamento(nVencedores, vencedores, vetorCompetidores);
+   }
+   else if (quantidadeCompetidores == 1)
+   {
+      return competidores[0];
+   }
+   else
+   {
+      return 0;
+   }
 }
 
 void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
@@ -486,15 +491,6 @@ void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
    char faixa[30], peso[30];
 
    system("cls");
-
-   // Mostra alguns exemplos, falta testar a veracidade da aleatoriedade
-   printf("Winner: %d\n", luta());
-   printf("Winner: %d\n", luta());
-   printf("Winner: %d\n", luta());
-   printf("Winner: %d\n", luta());
-   printf("Winner: %d\n", luta());
-   printf("Winner: %d\n", luta());
-   printf("Winner: %d\n", luta());
 
    printf("Escolha a categoria:\n");
    printf("Faixas disponiveis para a luta:\n-Branca\n-Azul\n-Marrom\n-Preta\n");
@@ -515,11 +511,10 @@ void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
    printf("Quantidade de competidores: %d\n", quantidadeCompetidores);
    for (int i = 0; i < quantidadeCompetidores; i++)
    {
-      printf("Competidor %d: %s\n", i + 1, vetorCompetidores[competidores[i] - 1].nome);
-      printf("Competidor %d: %d\n", i + 1, competidores[i]);
+      printf("Competidor %d: %s - %d\n", i + 1, vetorCompetidores[competidores[i] - 1].nome, competidores[i]);
    }
 
-   printf("\nVencedor: %d", chaveamento(quantidadeCompetidores, competidores));
+   printf("\nVencedor: %d", chaveamento(quantidadeCompetidores, competidores, vetorCompetidores));
 }
 
 int main()
