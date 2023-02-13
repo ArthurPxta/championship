@@ -437,20 +437,21 @@ int chaveamento(int quantidadeCompetidores, int competidores[], Competidor *veto
       printf("\nNova Rodada de lutas!\n");
 
       int nVencedores, vencedores[quantidadeCompetidores];
+      int indicecompetidores = 0;
+      int indiceVencedores = 0;
+      int indiceLutas = 0;
 
       if (quantidadeCompetidores % 2 == 1)
       {
          nVencedores = (quantidadeCompetidores / 2) + 1;
-         vencedores[nVencedores - 1] = competidores[quantidadeCompetidores - 1];
+         vencedores[indiceVencedores] = competidores[quantidadeCompetidores - 1];
+         indiceVencedores++;
       }
       else
       {
          nVencedores = (quantidadeCompetidores) / 2;
       }
 
-      int indicecompetidores = 0;
-      int indiceVencedores = 0;
-      int indiceLutas = 0;
 
       for (int i = 0; i < quantidadeCompetidores / 2; i++, indiceLutas++,
                indiceVencedores++, indicecompetidores += 2)
@@ -534,7 +535,6 @@ int main()
       switch (opcao = menu())
       {
       case 1:
-         // nCompetidores = cadastrarCompetidor(nCompetidores, vetorCompetidores);
          nCompetidores = cadastrarCompetidor(nCompetidores, vetorCompetidores);
          break;
       case 2:
@@ -553,8 +553,6 @@ int main()
          break;
       case 5:
          comecarCampeonato(nCompetidores, vetorCompetidores);
-         // printf("%d\n", luta());
-         // printf("%d\n", luta());
 
          printf("\nAperte Enter para continuar.\n");
          getchar();
