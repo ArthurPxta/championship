@@ -403,32 +403,43 @@ int separaCompetidores(int nCompetidores, Competidor *vetorCompetidores, int *co
 }
 
 // Falta testar para checar o funcionamento
-int chaveamento(int quantidadeCompetidores, int *competidores)
+int chaveamento(int quantidadeCompetidores, int competidores[])
 {
-   if (quantidadeCompetidores > 2)
+   if (quantidadeCompetidores >= 2)
    {
-      int *vencedores[quantidadeCompetidores];
-      int nVencedores = 0;
+      // int vencedores;
+      int nVencedores = quantidadeCompetidores / 2, indiceVencedores = 0;
+      int vencedores[nVencedores];
+
       for (int i = 0; i < quantidadeCompetidores / 2; i += 2)
       {
          if (luta())
          {
-            vencedores[nVencedores] = competidores[i];
+            printf("Luta: 1\n");
+            vencedores[indiceVencedores] = competidores[i];
+            indiceVencedores++;
          }
          else
          {
-            vencedores[nVencedores] = competidores[i];
+            printf("Luta: 0\n");
+            vencedores[indiceVencedores] = competidores[i + 1];
+            indiceVencedores++;
          }
-         nVencedores++;
       }
-      if (quantidadeCompetidores >= 2)
+
+      if (quantidadeCompetidores % 2 == 1)
       {
+         vencedores[indiceVencedores] = competidores[quantidadeCompetidores - 1];
+      }
+      // if (quantidadeCompetidores >= 2)
+      // {
+      //    return chaveamento(nVencedores, vencedores);
+      // }
+      // else
+      // {
+      //    return vencedores[0];
+      // }
          return chaveamento(nVencedores, vencedores);
-      }
-      else
-      {
-         return vencedores[0];
-      }
    }
    else if (quantidadeCompetidores == 1)
    {
@@ -462,9 +473,9 @@ int luta()
    printf("A: %d, B: %d.\n", a, b);
 
    if (a > b)
-      return 0;
-   else
       return 1;
+   else
+      return 0;
 }
 
 void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
@@ -547,6 +558,8 @@ int main()
          break;
       case 5:
          comecarCampeonato(nCompetidores, vetorCompetidores);
+         // printf("%d\n", luta());
+         // printf("%d\n", luta());
 
          printf("\nAperte Enter para continuar.\n");
          getchar();
