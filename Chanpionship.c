@@ -12,6 +12,73 @@ typedef struct competidor
    int idade, inscricao;
 } Competidor;
 
+void ordenarCompetidores(int n, Competidor *vetorCompetidores);
+void carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores);
+
+
+// salva os competidores no arquivo
+void salvarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
+{
+   // declaração do ponteiro tipo FILE
+   FILE *cadastro;
+   cadastro = fopen("cadastro.txt", "w+");
+
+   if (cadastro == NULL)
+   {
+      printf("Error opening file.\n");
+      printf("Function: salvarCompetidores\n");
+      // return 1;
+   }
+
+   for (int i = 0; i < nCompetidores; i++)
+   {
+      if (vetorCompetidores[i].inscricao != 0)
+      {
+         fprintf(cadastro, "%d %s %s %g %d\n",
+                 vetorCompetidores[i].inscricao,
+                 vetorCompetidores[i].nome,
+                 vetorCompetidores[i].faixa,
+                 vetorCompetidores[i].peso,
+                 vetorCompetidores[i].idade);
+      }
+   }
+   fclose(cadastro);
+}
+
+// carrega os competidores do arquivo no vetor
+void carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
+{
+   // declaração do ponteiro tipo FILE
+   FILE *cadastro;
+   cadastro = fopen("cadastro.txt", "r");
+
+   if (cadastro == NULL)
+   {
+      printf("Error opening file.\n");
+      printf("Function: carregarCompetidores\n");
+      // return 1;
+   }
+
+   for (int i = 0; i < nCompetidores; i++)
+   {
+     /*  if (vetorCompetidores[i].inscricao > nCompetidores)
+      {
+         maiorInscricao = vetorCompetidores[i].inscricao;
+      } */
+      fscanf(cadastro, "%d %s %s %f %d",
+             &vetorCompetidores[i].inscricao,
+             vetorCompetidores[i].nome,
+             vetorCompetidores[i].faixa,
+             &vetorCompetidores[i].peso,
+             &vetorCompetidores[i].idade);
+   }
+   fclose(cadastro);
+
+   ordenarCompetidores(nCompetidores, vetorCompetidores);
+   
+   salvarCompetidores(nCompetidores, vetorCompetidores);
+}
+
 // Remove competidor do vetor, e salva vetor atualizado no arquivo
 void removerCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 {
@@ -48,70 +115,6 @@ void removerCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    printf("\ncompetidor removido com sucesso!\n");
 }
 
-// carrega os competidores do arquivo no vetor
-int carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
-{
-   int maiorInscricao = 0;
-   // declaração do ponteiro tipo FILE
-   FILE *cadastro;
-   cadastro = fopen("cadastro.txt", "r");
-
-   if (cadastro == NULL)
-   {
-      printf("Error opening file.\n");
-      printf("Function: carregarCompetidores\n");
-      // return 1;
-   }
-
-   for (int i = 0; i < nCompetidores; i++)
-   {
-      if (vetorCompetidores[i].inscricao > maiorInscricao)
-      {
-         maiorInscricao = vetorCompetidores[i].inscricao;
-      }
-      fscanf(cadastro, "%d %s %s %f %d",
-             &vetorCompetidores[i].inscricao,
-             vetorCompetidores[i].nome,
-             vetorCompetidores[i].faixa,
-             &vetorCompetidores[i].peso,
-             &vetorCompetidores[i].idade);
-   }
-   fclose(cadastro);
-   ordenarCompetidores(nCompetidores, vetorCompetidores);
-   salvarCompetidores(nCompetidores, vetorCompetidores);
-
-   return maiorInscricao;
-}
-
-// salva os competidores no arquivo
-void salvarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
-{
-   // declaração do ponteiro tipo FILE
-   FILE *cadastro;
-   cadastro = fopen("cadastro.txt", "w+");
-
-   if (cadastro == NULL)
-   {
-      printf("Error opening file.\n");
-      printf("Function: salvarCompetidores\n");
-      // return 1;
-   }
-
-   for (int i = 0; i < nCompetidores; i++)
-   {
-      if (vetorCompetidores[i].inscricao != 0)
-      {
-         fprintf(cadastro, "%d %s %s %g %d\n",
-                 vetorCompetidores[i].inscricao,
-                 vetorCompetidores[i].nome,
-                 vetorCompetidores[i].faixa,
-                 vetorCompetidores[i].peso,
-                 vetorCompetidores[i].idade);
-      }
-   }
-   fclose(cadastro);
-}
-
 // Alterna a ordem dos competidores, CHAMADA APENAS PELA ordenarCompetidores
 void alternaCompetidor(int comp1, int comp2, Competidor *vetorCompetidores)
 {
@@ -138,15 +141,20 @@ void alternaCompetidor(int comp1, int comp2, Competidor *vetorCompetidores)
 // ordena os competidores de forma sequencial, considerando o número de inscrição
 void ordenarCompetidores(int n, Competidor *vetorCompetidores)
 {
-   if (n < 1)
+  /*  if (n < 1)
       return;
-
+ */
    for (int i = 0; i < n; i++)
    {
       if (vetorCompetidores[i].inscricao > vetorCompetidores[i + 1].inscricao)
+      {
          alternaCompetidor(i, i + 1, vetorCompetidores);
+      }
    }
-   ordenarCompetidores(n - 1, vetorCompetidores);
+   if(n >= 1)
+   {
+      return ordenarCompetidores(n - 1, vetorCompetidores);
+   }
 }
 
 // função que conta competidores
@@ -340,8 +348,12 @@ void alterarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 
    salvarCompetidores(nCompetidores, vetorCompetidores);
    printf("Competidor alterado!\n");
-   sleep(3);
+
+   printf("\nAperte Enter para continuar.\n");
+   getchar();
+   getchar();
 }
+
 
 // Escreve o menu
 int menu()
@@ -496,13 +508,15 @@ void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
    printf("Escolha a categoria:\n");
    printf("Faixas disponiveis para a luta:\n-Branca\n-Azul\n-Marrom\n-Preta\n");
    printf("Digite a faixa: ");
-   scanf("%s", &faixa);
+   scanf("%s", faixa);
+   setbuf(stdin,NULL);
 
    system("cls");
    printf("Pesos disponiveis para a luta:\n-Galo\n-Medio\n-Pesado\n");
    printf("Escolha a categoria:\n");
    printf("Digite o peso: ");
-   scanf("%s", &peso);
+   scanf("%s", peso);
+   setbuf(stdin,NULL);
 
    quantidadeCompetidores = separaCompetidores(nCompetidores, vetorCompetidores, competidores, quantidadeCompetidores, faixa[0], peso[0]);
 
@@ -521,14 +535,14 @@ void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
 int main()
 {
    srand(time(NULL));
-   int opcao, nCompetidores = contarCompetidores(), maiorCompetidor;
+   int opcao, nCompetidores = contarCompetidores();
 
    // declaração do vetor de competidores
    Competidor *vetorCompetidores;
 
    vetorCompetidores = (Competidor *)malloc(nCompetidores * sizeof(Competidor));
 
-   maiorCompetidor = carregarCompetidores(nCompetidores, vetorCompetidores);
+   carregarCompetidores(nCompetidores, vetorCompetidores);
 
    while (1)
    {
@@ -542,7 +556,7 @@ int main()
          nCompetidores = contarCompetidores();
          break;
       case 3:
-         alterarCompetidor(contarCompetidores, vetorCompetidores);
+         alterarCompetidor(nCompetidores, vetorCompetidores);
          break;
       case 4:
          acharCompetidor(nCompetidores, vetorCompetidores);
@@ -562,8 +576,17 @@ int main()
          printf("\nPrograma encerrado.\n");
          return 0;
          break;
+      
       default:
+         system("cls");
+
          printf(" \n Opcao invalida! \n");
+
+         printf("\nAperte Enter para continuar.\n");
+         getchar();
+         getchar();
+         
+
          break;
       }
    }
