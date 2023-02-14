@@ -20,6 +20,7 @@ void carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores);
 // salva os competidores no arquivo
 void salvarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
 {
+
    // declaração do ponteiro tipo FILE
    FILE *cadastro;
    cadastro = fopen("cadastro.txt", "w+");
@@ -80,6 +81,8 @@ void carregarCompetidores(int nCompetidores, Competidor *vetorCompetidores)
 void removerCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 {
    system("cls");
+
+   carregarCompetidores(nCompetidores, vetorCompetidores);
 
    int id;
    char confirma;
@@ -157,7 +160,7 @@ int contarCompetidores()
    if (cadastro == NULL)
    {
       printf("Error opening file.\n");
-      printf("Function: getNumberOfStudents\n");
+      printf("Function: contarCompetidores\n");
       return 1;
    }
 
@@ -176,6 +179,8 @@ int contarCompetidores()
 // Calcula se há alguma lacuna na sequencia dos números de inscrições
 int temLacuna(int nCompetidores, Competidor *vetorCompetidores)
 {
+   carregarCompetidores(nCompetidores, vetorCompetidores);
+   
    int temp = 0, temp1, lacuna = 0;
    for (int i = 0; i <= nCompetidores; i++)
    {
@@ -211,9 +216,10 @@ int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    if (cadastro == NULL)
    {
       printf("Error opening file.\n");
-      printf("Function: getNumberOfStudents\n");
+      printf("Function: cadastrarCompetidores\n");
       return 1;
    }
+
    printf("Informe o nome do competidor:");
    scanf("%15[^\n]", competidor.nome);
    setbuf(stdin, NULL);
@@ -229,16 +235,16 @@ int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 
    nCompetidores++;
 
-   if (lacuna)
+   if (lacuna != 0)
    {
       competidor.inscricao = lacuna;
    }
    else
-   {
+   { 
       competidor.inscricao = nCompetidores;
-   }
+   } 
 
-   fprintf(cadastro, "%d %s %s %g %d \n", competidor.inscricao, competidor.nome, competidor.faixa, competidor.peso, competidor.idade);
+   fprintf(cadastro, "%d %s %s %f %d \n", competidor.inscricao, competidor.nome, competidor.faixa, competidor.peso, competidor.idade);
    
    fclose(cadastro);
 
@@ -246,9 +252,16 @@ int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 
    vetorCompetidores = (Competidor *)malloc(nCompetidores * sizeof(Competidor));
 
+   if (vetorCompetidores == NULL)
+   {
+      printf("Error malloc create.\n");
+      printf("Function: cadastrarCompetidores\n");
+      return 1;
+   }
 
-   carregarCompetidores(nCompetidores, vetorCompetidores);
+
    system("cls");
+   
    return nCompetidores;
 }
 
@@ -528,7 +541,9 @@ int main()
       switch (opcao = menu())
       {
       case 1:
-         nCompetidores = cadastrarCompetidor(nCompetidores, vetorCompetidores);
+         cadastrarCompetidor(nCompetidores, vetorCompetidores);
+
+         nCompetidores = contarCompetidores();
          break;
       case 2:
          removerCompetidor(nCompetidores, vetorCompetidores);
@@ -541,6 +556,7 @@ int main()
          acharCompetidor(nCompetidores, vetorCompetidores);
 
          printf("\nAperte Enter para continuar.\n");
+         getchar();
          getchar();
 
          break;
