@@ -262,7 +262,6 @@ int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 
    printf("\nAperte Enter para continuar.\n");
    getchar();
-   getchar();
    
    system("cls");
    return nCompetidores;
@@ -497,6 +496,8 @@ int chaveamento(int quantidadeCompetidores, int competidores[], Competidor *veto
 
 void comecarCampeonato(int nCompetidores, Competidor *vetorCompetidores)
 {
+   carregarCompetidores(nCompetidores, vetorCompetidores);
+
    int *competidores, quantidadeCompetidores = 0;
    competidores = (int *)malloc(quantidadeCompetidores * sizeof(int));
 
