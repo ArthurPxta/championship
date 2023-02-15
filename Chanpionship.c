@@ -260,8 +260,11 @@ int cadastrarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    }
 
 
-   system("cls");
+   printf("\nAperte Enter para continuar.\n");
+   getchar();
+   getchar();
    
+   system("cls");
    return nCompetidores;
 }
 
@@ -274,7 +277,8 @@ void acharCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    printf("Competidores registrados: %d\n", nCompetidores);
 
    printf("Digite a inscricao do competidor: ");
-   scanf(" %d", &id);
+   scanf("%d", &id);
+   setbuf(stdin, NULL);
 
    carregarCompetidores(nCompetidores, vetorCompetidores);
 
@@ -292,6 +296,9 @@ void acharCompetidor(int nCompetidores, Competidor *vetorCompetidores)
    {
       printf("\n O competidor com o id %d nao existe!! \n", id);
    }
+   
+   printf("\nAperte Enter para continuar.\n");
+   getchar();
 }
 
 // Altera informações do competidor
@@ -346,7 +353,6 @@ void alterarCompetidor(int nCompetidores, Competidor *vetorCompetidores)
 
 }
 
-
 // Escreve o menu
 int menu()
 {
@@ -368,6 +374,7 @@ int menu()
    return opcao;
 }
 
+// separa os competidores por peso e faixa
 int separaCompetidores(int nCompetidores, Competidor *vetorCompetidores, int *competidores, int quantidadeCompetidores, char faixa, char peso)
 {
    for (int i = 0; i < nCompetidores; i++)
@@ -548,16 +555,15 @@ int main()
       case 2:
          removerCompetidor(nCompetidores, vetorCompetidores);
          nCompetidores = contarCompetidores();
+
          break;
       case 3:
          alterarCompetidor(nCompetidores, vetorCompetidores);
+
          break;
       case 4:
          acharCompetidor(nCompetidores, vetorCompetidores);
 
-         printf("\nAperte Enter para continuar.\n");
-         getchar();
-         getchar();
 
          break;
       case 5:
