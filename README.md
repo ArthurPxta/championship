@@ -1,36 +1,21 @@
-# championship
-Championship manager 
- 
----------Ideia de trabalho 2-----------
+# Jiu-Jitsu Championship Manager
 
-.Cadastro de Campeonato de Jiu-Jitsu * winner *
+## Programa para gerenciar um campeonato de Jiu-Jitsu
 
-Menu
-consultar por categoria
-	faixa 
-	peso
-	inscrição
-
-cadastro
-remover
-alterar
-começar campeonato
-sair
-
-cadastro de competidores
-	faixa
-	peso 
-	idade
-	inscrição
-
-busca e ordenação --- chaves
-  
-  peso
-  idade
-  faixa
-  
-Categoria absoluto -- vetor
-   por faixa
+### Principais funções disponíveis:
+- Cadastro competidor
+- Remover competidor
+- Alterar dados do competidor
+- Pesquisar competidor
+- Começar campeonato
 
 
-UM BOM GUERREIRO TEM MUITAS CICATRIZES
+### Funções a serem adicionadas:
+- #### Vencedor absoluto por faixa.
+- #### Consultar por outras categorias:
+	- faixa
+	- peso
+	- nome
+
+
+## UM BOM GUERREIRO TEM MUITAS CICATRIZES!
